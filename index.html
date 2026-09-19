@@ -905,7 +905,7 @@ footer{margin-top:30px}
   <div class="wrap">
     <div class="vcard">
       <video id="heroVid" autoplay="autoplay" muted="muted" defaultmuted loop playsinline webkit-playsinline x5-playsinline preload="auto" disablepictureinpicture aria-label="الفيديو التعريفي للمدرسة">
-        <source src="assets/asset-05-0859b316ba21.mp4" type="video/mp4">
+        <source src="assets/school-video.mp4" type="video/mp4">
       </video>
       <div class="vid-ctrl">
         <button id="vidSound" type="button" aria-label="تشغيل الصوت"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 10v4h4l5 4V6l-5 4z"/><path d="m16 9 5 6M21 9l-5 6"/></svg></button>
@@ -2012,6 +2012,25 @@ section.hero .qportrait{
   section.hero .quote .by b{font-size:.72rem!important}
   section.hero .qportrait{width:72px!important;aspect-ratio:3/4;max-height:none;border-radius:14px!important;border-width:3px!important}
 }
+
+/* ===== Final icon + video stability fix ===== */
+svg{display:block}
+.svc .i,.quick-card .qi,.honor-mini-icon,.honor-mini-arrow,.stat .si,
+.vid-ctrl button{display:flex!important;align-items:center!important;justify-content:center!important}
+.svc .i svg,.quick-card .qi svg,.honor-mini-icon svg,.honor-mini-arrow svg,
+.stat .si svg,.vid-ctrl button svg{
+  display:block!important;visibility:visible!important;opacity:1!important;
+  width:28px!important;height:28px!important;flex:none!important;
+}
+.svc .i svg{max-width:32px!important;max-height:32px!important}
+.quick-card .qi svg{width:27px!important;height:27px!important}
+.honor-mini-icon svg{width:26px!important;height:26px!important}
+.stat .si svg{width:24px!important;height:24px!important}
+.vid-ctrl button svg{width:20px!important;height:20px!important}
+
+/* Reliable video sizing/loading */
+video{display:block;max-width:100%}
+.honor-mini video{min-height:180px}
 </style>
 <script>
 /* عدّاد الإحصائيات: الأرقام الحقيقية مكتوبة داخل HTML، والحركة تجميلية فقط */
@@ -2031,6 +2050,37 @@ section.hero .qportrait{
     io2.observe(box);}
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run(e.target);io.unobserve(e.target);}})},{threshold:.5});
   nums.forEach(function(n){n.textContent='0';io.observe(n)});
+})();
+</script>
+
+<script>
+(function(){
+  const FALLBACK='assets/school-video.mp4';
+  document.querySelectorAll('video').forEach(function(v){
+    function safePlay(){
+      try{
+        v.muted=true;
+        v.setAttribute('muted','');
+        v.setAttribute('playsinline','');
+        const p=v.play();
+        if(p && p.catch) p.catch(function(){});
+      }catch(e){}
+    }
+    v.addEventListener('error',function(){
+      if(v.dataset.fallbackApplied==='1') return;
+      v.dataset.fallbackApplied='1';
+      try{
+        v.pause();
+        while(v.firstChild) v.removeChild(v.firstChild);
+        const s=document.createElement('source');
+        s.src=FALLBACK;
+        s.type='video/mp4';
+        v.appendChild(s);
+        v.load();
+        safePlay();
+      }catch(e){}
+    });
+  });
 })();
 </script>
 </body>
