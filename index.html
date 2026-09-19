@@ -950,10 +950,10 @@ footer{margin-top:30px}
       <p>نحو تعليم نوعي .. لأجيال متميزة</p>
     </div>
     <div class="stats">
-      <div class="stat"><span class="si" style="background:#fdf3e7;color:var(--orange)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9 5.5-.8z"/></svg></span><span class="num" data-count="42">0</span><span class="lbl">برنامجًا ونشاطًا</span></div>
-      <div class="stat"><span class="si" style="background:#eef3fc;color:var(--blue)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5S20 17 20 21"/></svg></span><span class="num" data-count="635">0</span><span class="lbl">طالبة</span></div>
-      <div class="stat"><span class="si" style="background:#eef8f3;color:var(--green)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.4"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/><path d="M16.5 14c2.6.3 4.5 2.2 4.5 5"/></svg></span><span class="num" data-count="75">0</span><span class="lbl">منسوبة</span></div>
-      <div class="stat"><span class="si" style="background:var(--purple-lt);color:var(--purple)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg></span><span class="num" data-count="19">0</span><span class="lbl">فصلًا دراسيًا</span></div>
+      <div class="stat"><span class="si" style="background:#fdf3e7;color:var(--orange)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9 5.5-.8z"/></svg></span><span class="num" data-count="42">42</span><span class="lbl">برنامجًا ونشاطًا</span></div>
+      <div class="stat"><span class="si" style="background:#eef3fc;color:var(--blue)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5S20 17 20 21"/></svg></span><span class="num" data-count="635">635</span><span class="lbl">طالبة</span></div>
+      <div class="stat"><span class="si" style="background:#eef8f3;color:var(--green)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.4"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5"/><path d="M16.5 14c2.6.3 4.5 2.2 4.5 5"/></svg></span><span class="num" data-count="75">75</span><span class="lbl">منسوبة</span></div>
+      <div class="stat"><span class="si" style="background:var(--purple-lt);color:var(--purple)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg></span><span class="num" data-count="19">19</span><span class="lbl">فصلًا دراسيًا</span></div>
     </div>
   </div>
 </section>
@@ -1785,31 +1785,30 @@ function doSearch(){
 document.getElementById('qbtn').addEventListener('click',doSearch);
 q.addEventListener('keydown',e=>{ if(e.key==='Enter') doSearch(); });
 
-/* hero video autoplay */
+/* hero video autoplay — mobile-safe */
 (function(){
   const hv=document.getElementById('heroVid');
   if(!hv) return;
-  hv.autoplay=true;
-  hv.muted=true;
-  hv.defaultMuted=true;
-  hv.playsInline=true;
-  hv.setAttribute('autoplay','');
-  hv.setAttribute('muted','');
-  hv.setAttribute('playsinline','');
-  hv.setAttribute('webkit-playsinline','');
-
+  const prepare=()=>{
+    hv.autoplay=true; hv.muted=true; hv.defaultMuted=true; hv.volume=0; hv.playsInline=true;
+    hv.setAttribute('autoplay','autoplay'); hv.setAttribute('muted','muted');
+    hv.setAttribute('playsinline',''); hv.setAttribute('webkit-playsinline',''); hv.setAttribute('x5-playsinline','');
+  };
   const forcePlay=()=>{
-    hv.muted=true;
-    hv.defaultMuted=true;
+    prepare();
     const p=hv.play();
     if(p && p.catch) p.catch(()=>{});
   };
-  ['loadedmetadata','canplay','canplaythrough','loadeddata'].forEach(ev=>hv.addEventListener(ev,forcePlay,{once:false}));
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',forcePlay,{once:true});
-  else forcePlay();
+  prepare();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',forcePlay,{once:true}); else forcePlay();
   window.addEventListener('load',forcePlay,{once:true});
-  document.addEventListener('visibilitychange',()=>{ if(!document.hidden && hv.paused) forcePlay(); });
-  hv.addEventListener('pause',()=>{ if(!document.hidden) setTimeout(forcePlay,120); });
+  window.addEventListener('pageshow',forcePlay);
+  ['loadedmetadata','loadeddata','canplay','canplaythrough'].forEach(ev=>hv.addEventListener(ev,forcePlay));
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&hv.paused)forcePlay();});
+  hv.addEventListener('pause',()=>{if(!document.hidden)setTimeout(forcePlay,150);});
+  const gesturePlay=()=>{if(hv.paused)forcePlay();};
+  document.addEventListener('touchstart',gesturePlay,{passive:true,once:true});
+  document.addEventListener('pointerdown',gesturePlay,{passive:true,once:true});
 })();
 </script>
 
