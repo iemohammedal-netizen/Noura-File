@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 620">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3ecfb"/><stop offset="1" stop-color="#ddd0ef"/></linearGradient></defs>
+<rect width="500" height="620" rx="34" fill="url(#bg)"/>
+<circle cx="250" cy="210" r="105" fill="#d7a47b"/>
+<path d="M145 210c8-105 202-135 215 5-45-32-116-48-215-5z" fill="#2d2834"/>
+<path d="M125 560c10-145 82-205 125-205s115 60 125 205z" fill="#fff" stroke="#6f4db5" stroke-width="7"/>
+<path d="M205 355l45 55 45-55" fill="#d9d9df"/>
+<circle cx="214" cy="218" r="7" fill="#2d2834"/><circle cx="286" cy="218" r="7" fill="#2d2834"/>
+<path d="M220 275q30 22 60 0" fill="none" stroke="#8b4f43" stroke-width="7" stroke-linecap="round"/>
+<text x="250" y="595" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#5c4a78">صورة رمزية</text>
+</svg>
