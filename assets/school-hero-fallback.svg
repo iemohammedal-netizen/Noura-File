@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6f0ff"/><stop offset="1" stop-color="#e9def8"/></linearGradient></defs>
+<rect width="1200" height="700" fill="url(#g)"/>
+<rect y="530" width="1200" height="170" fill="#e5d8f3"/>
+<path d="M130 530V285l470-190 470 190v245H130z" fill="#fff" stroke="#6f4db5" stroke-width="8"/>
+<path d="M600 95v-55M555 65h90" stroke="#6f4db5" stroke-width="10" stroke-linecap="round"/>
+<path d="M190 305h820" stroke="#d8c8ea" stroke-width="8"/>
+<g fill="#f4a640" stroke="#6f4db5" stroke-width="6"><rect x="205" y="350" width="120" height="180" rx="10"/><rect x="360" y="350" width="120" height="180" rx="10"/><rect x="720" y="350" width="120" height="180" rx="10"/><rect x="875" y="350" width="120" height="180" rx="10"/></g>
+<g fill="#fff" stroke="#6f4db5" stroke-width="6"><rect x="535" y="350" width="130" height="180" rx="10"/><path d="M535 350h130l-65-80z"/></g>
+<text x="600" y="620" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#3c2b5f">الثانوية الثانية والأربعون</text>
+<text x="600" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#6f6680">جدة • حي الصفا</text>
+</svg>
