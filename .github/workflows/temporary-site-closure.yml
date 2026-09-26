@@ -9,14 +9,20 @@ permissions:
 
 jobs:
   close-site:
-    if: ${{ !hashFiles('index-live-backup.html') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Save current site and close it
+      - name: Save original site and show closure page
+        shell: bash
         run: |
+          if [ -f index-live-backup.html ]; then
+            echo "Site is already closed; keeping the saved original."
+            exit 0
+          fi
+
           cp index.html index-live-backup.html
+
           cat > index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -39,14 +45,15 @@ p{margin:0;font-size:clamp(18px,3.5vw,25px);line-height:1.8;opacity:.92}
 <main class="card">
   <div class="icon">🔒</div>
   <h1>تم إغلاق الموقع</h1>
-  <p>الموقع مغلق مؤقتًا.</p>
+  <p>الموقع مغلق مؤقتًا للزوار.</p>
   <div class="school">الثانوية الثانية والأربعون – مسارات</div>
 </main>
 </body>
 </html>
 EOF
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html index-live-backup.html
-          git commit -m "Temporarily close website"
+          git commit -m "Temporarily close website for visitors"
           git push
