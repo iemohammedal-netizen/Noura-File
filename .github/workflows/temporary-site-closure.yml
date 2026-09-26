@@ -1,0 +1,52 @@
+name: Temporary Site Closure
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  close-site:
+    if: ${{ !hashFiles('index-live-backup.html') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Save current site and close it
+        run: |
+          cp index.html index-live-backup.html
+          cat > index.html <<'EOF'
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تم إغلاق الموقع</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,Tahoma,sans-serif}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#4d1d8f,#6d3bb1,#3b176f);color:#fff;text-align:center;padding:24px}
+.card{width:min(680px,100%);padding:55px 28px;border:1px solid rgba(255,255,255,.25);border-radius:28px;background:rgba(255,255,255,.12);box-shadow:0 20px 60px rgba(0,0,0,.25);backdrop-filter:blur(12px)}
+.icon{font-size:64px;margin-bottom:18px}
+h1{margin:0 0 18px;font-size:clamp(34px,7vw,58px);font-weight:900}
+p{margin:0;font-size:clamp(18px,3.5vw,25px);line-height:1.8;opacity:.92}
+.school{margin-top:30px;font-size:15px;opacity:.75}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="icon">🔒</div>
+  <h1>تم إغلاق الموقع</h1>
+  <p>الموقع مغلق مؤقتًا.</p>
+  <div class="school">الثانوية الثانية والأربعون – مسارات</div>
+</main>
+</body>
+</html>
+EOF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html index-live-backup.html
+          git commit -m "Temporarily close website"
+          git push
