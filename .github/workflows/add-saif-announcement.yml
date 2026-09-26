@@ -1,0 +1,88 @@
+name: Add SAIF 2026 announcement
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/saif-2026.jpg'
+      - '.github/workflows/add-saif-announcement.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  add-saif-announcement:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add announcement card
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+
+          if 'id="saif2026Announcement"' in s:
+              print("SAIF announcement already exists.")
+              raise SystemExit(0)
+
+          if not Path("assets/saif-2026.jpg").exists():
+              print("Waiting for assets/saif-2026.jpg to be uploaded.")
+              raise SystemExit(0)
+
+          card = r'''
+          <article id="saif2026Announcement" class="news-card" dir="rtl" style="overflow:hidden;">
+            <img src="assets/saif-2026.jpg" alt="إعلان مسابقة سيف SAIF الوطنية للعلوم والابتكار 2026" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:857/1280;object-fit:cover;">
+            <div style="padding:14px 16px;">
+              <div style="font-size:.78rem;color:#7a55ad;font-weight:800;margin-bottom:4px;">إعلان</div>
+              <h3 style="margin:0;font-size:1.05rem;">مسابقة سيف الوطنية للعلوم والابتكار 2026</h3>
+              <p style="margin:7px 0 0;line-height:1.7;font-size:.86rem;">فرصة للمشاركة لجميع الفئات العمرية – للطلاب والطالبات والأسر المقيمة والمواطنين.</p>
+              <a href="https://saifair.sa/register?lang=ar" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-weight:800;color:#5d3b8f;">سجّل الآن ←</a>
+            </div>
+          </article>
+          '''
+
+          # Prefer the existing announcements/news section.
+          patterns = [
+              r'(<section[^>]*?(?:إعلانات|الأخبار|أخبار|الإعلانات)[\s\S]*?</section>)',
+              r'(<div[^>]*?(?:إعلانات|الأخبار|أخبار|الإعلانات)[\s\S]*?</div>)'
+          ]
+
+          for pat in patterns:
+              m = re.search(pat, s, flags=re.I)
+              if m:
+                  block = m.group(1)
+                  pos = block.rfind('</')
+                  if pos >= 0:
+                      start = m.start(1) + pos
+                      s = s[:start] + card + '\n' + s[start:]
+                      break
+          else:
+              # Fallback: insert before the services section.
+              marker = '<!-- Services -->'
+              if marker in s:
+                  s = s.replace(marker, card + '\n\n' + marker, 1)
+              else:
+                  s = s.replace('</body>', card + '\n</body>', 1)
+
+          p.write_text(s, encoding="utf-8")
+          print("SAIF 2026 announcement added.")
+          PY
+
+      - name: Commit announcement
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Add SAIF 2026 announcement"
+          git push
