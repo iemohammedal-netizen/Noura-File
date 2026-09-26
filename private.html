@@ -2,31 +2,41 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الثانوية الثانية والأربعون – مسارات</title>
-<style>html,body{margin:0;width:100%;height:100%;overflow:hidden}iframe{display:block;width:100%;height:100%;border:0}</style>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+iframe{display:block;width:100%;height:100%;border:0}
+</style>
 </head>
 <body>
-<iframe id="site" src="index-live-backup.html" title="الثانوية الثانية والأربعون"></iframe>
+<iframe id="site" src="index-live-backup.html?v=4" title="الثانوية الثانية والأربعون"></iframe>
 <script>
 (function(){
-  const f=document.getElementById('site');
-  function add(){
-    try{
-      const doc=f.contentDocument;
-      if(!doc)return;
-      if(doc.getElementById('schoolAchievementsNote'))return;
-      const els=[...doc.querySelectorAll('p')];
-      const el=els.find(e=>e.textContent.includes('مديرة المدرسة:'));
-      if(!el)return;
-      const note=doc.createElement('div');
-      note.id='schoolAchievementsNote';
-      note.textContent='الموقع خاص لعرض إنجازات المدرسة';
-      note.style.cssText='margin:4px 0 0;font-size:.78rem;color:#6b4aa1;font-weight:600;text-align:center;';
-      el.insertAdjacentElement('afterend',note);
-    }catch(e){}
-  }
-  f.addEventListener('load',()=>{add();setTimeout(add,500);setTimeout(add,1500);});
+ const noteText='الموقع خاص لعرض إنجازات المدرسة';
+ function addNote(){
+   const f=document.getElementById('site');
+   try{
+     const d=f.contentDocument;
+     if(!d||!d.body)return false;
+     if(d.getElementById('schoolAchievementsNote'))return true;
+     const candidates=[...d.querySelectorAll('p,div,span,b,strong')];
+     const el=candidates.find(x=>x.textContent.trim().includes('مديرة المدرسة:'));
+     if(!el)return false;
+     const note=d.createElement('div');
+     note.id='schoolAchievementsNote';
+     note.textContent=noteText;
+     note.style.cssText='display:block!important;margin:5px 0 0!important;padding:0!important;font-size:12px!important;line-height:1.5!important;color:#6b4aa1!important;font-weight:600!important;text-align:center!important;opacity:.9!important;';
+     el.insertAdjacentElement('afterend',note);
+     return true;
+   }catch(e){return false}
+ }
+ const f=document.getElementById('site');
+ f.addEventListener('load',function(){
+   let n=0;
+   const timer=setInterval(function(){if(addNote()||++n>30)clearInterval(timer)},500);
+ });
+ setTimeout(addNote,2000);
 })();
 </script>
 </body>
