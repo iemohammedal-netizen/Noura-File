@@ -1,0 +1,57 @@
+name: Add latest-news images
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  add-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Insert latest-news gallery
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+          marker = "آخر الأخبار"
+          pos = s.find(marker)
+          if pos < 0:
+              raise SystemExit("لم يتم العثور على خانة آخر الأخبار")
+          start = s.rfind("<section", 0, pos)
+          end = s.find("</section>", pos)
+          if start < 0 or end < 0:
+              raise SystemExit("تعذر تحديد قسم آخر الأخبار")
+          end += len("</section>")
+          gallery = '''
+          <div id="latest-news-gallery" dir="rtl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:24px auto;max-width:1100px;padding:0 16px;">
+            <article style="overflow:hidden;border-radius:18px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.12);">
+              <img src="assets/news-future.jpg" alt="مسابقة مستقبلية أبعد من الأرض" style="display:block;width:100%;height:auto;">
+            </article>
+            <article style="overflow:hidden;border-radius:18px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.12);">
+              <img src="assets/news-impact.jpg" alt="لقاء معاً نصنع أثراً" style="display:block;width:100%;height:auto;">
+            </article>
+          </div>
+          '''
+          if 'id="latest-news-gallery"' not in s:
+              s = s[:end] + gallery + s[end:]
+              p.write_text(s, encoding="utf-8")
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Add latest news images"
+          git push
