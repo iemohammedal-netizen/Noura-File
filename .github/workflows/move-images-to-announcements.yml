@@ -1,0 +1,72 @@
+name: Move images to announcements
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  move-announcements:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Move the two announcement images
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path("index.html")
+          s = p.read_text(encoding="utf-8")
+
+          m = re.search(r'<div id="latest-news-gallery".*?</div>\s*', s, flags=re.S)
+          if not m:
+              print("Gallery not found; nothing to move.")
+              raise SystemExit(0)
+
+          gallery = m.group(0)
+          s_without = s[:m.start()] + s[m.end():]
+
+          markers = ["الإعلانات المدرسية", "الإعلانات", "إعلانات"]
+          marker_pos = -1
+          marker = None
+          for candidate in markers:
+              pos = s_without.find(candidate)
+              if pos >= 0:
+                  marker_pos = pos
+                  marker = candidate
+                  break
+
+          if marker_pos < 0:
+              raise SystemExit("لم يتم العثور على قسم الإعلانات في index.html")
+
+          start = s_without.rfind("<section", 0, marker_pos)
+          end = s_without.find("</section>", marker_pos)
+          if start < 0 or end < 0:
+              raise SystemExit("تعذر تحديد حدود قسم الإعلانات")
+
+          end += len("</section>")
+          # Avoid duplicate insertion if the workflow is ever retried.
+          if 'id="latest-news-gallery"' not in s_without:
+              s_without = s_without[:end] + "\n" + gallery + s_without[end:]
+
+          p.write_text(s_without, encoding="utf-8")
+          print(f"Moved gallery into section containing: {marker}")
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Move school images to announcements"
+          git push
