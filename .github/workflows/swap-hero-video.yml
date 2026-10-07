@@ -21,7 +21,7 @@ jobs:
           import re
           p = Path("index.html")
           s = p.read_text(encoding="utf-8")
-          target = "assets/cefcc47b-2a56-4607-8a3e-488b930fce5b.mov"
+          target = "assets/intro-school.mp4"
           m = re.search(r"<video\b[^>]*>.*?</video\s*>", s, re.I | re.S)
           if not m:
               raise SystemExit("No video element found in index.html")
