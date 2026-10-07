@@ -18,8 +18,8 @@ jobs:
           from pathlib import Path
           p=Path("index.html")
           s=p.read_text(encoding="utf-8")
-          s=s.replace("assets/news-future.jpg","assets/news-future.webp")
-          s=s.replace("assets/news-impact.jpg","assets/news-impact.webp")
+          s=s.replace("assets/news-future.webp","assets/news-future.jpg")
+          s=s.replace("assets/news-impact.webp","assets/news-impact.jpg")
           p.write_text(s,encoding="utf-8")
           PY
       - name: Commit
