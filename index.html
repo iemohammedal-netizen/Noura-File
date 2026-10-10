@@ -1160,6 +1160,11 @@ footer{margin-top:30px}
 </section>
 <style>
   .news-feature-list{display:grid;gap:18px;margin:24px auto;max-width:1100px;padding:0 16px}
+  .news-feature-card--highlight{border:2px solid #d9bd67;background:linear-gradient(135deg,#fffdf5,#ffffff);box-shadow:0 10px 30px rgba(126,96,25,.15)}
+  .news-feature-card--highlight .news-feature-thumb{flex-basis:150px;width:150px;height:220px}
+  .news-feature-card--highlight .news-feature-copy h3{color:#14604e}
+  @media(max-width:640px){.news-feature-card--highlight .news-feature-thumb{flex-basis:96px;width:96px;height:142px}}
+
   .news-feature-card{display:flex;align-items:center;gap:16px;padding:12px;border:1px solid #ebe5f3;border-radius:22px;background:#fff;box-shadow:0 8px 28px rgba(58,42,99,.12)}
   .news-feature-card:nth-child(even){flex-direction:row-reverse}
   .news-feature-thumb{flex:0 0 125px;width:125px;height:145px;padding:0;border:0;border-radius:18px;overflow:hidden;cursor:zoom-in;background:#f7f2fc;box-shadow:0 5px 16px rgba(58,42,99,.14)}
@@ -1176,6 +1181,11 @@ footer{margin-top:30px}
   @media(max-width:640px){.news-feature-card,.news-feature-card:nth-child(even){flex-direction:row;gap:13px;padding:12px}.news-feature-thumb{flex-basis:82px;width:82px;height:102px}.news-feature-copy h3{font-size:1rem}.news-feature-copy{font-size:.88rem;line-height:1.7}.news-feature-copy .news-meta{font-size:.75rem}}
 </style>
 <div id="latest-news-gallery" class="news-feature-list" dir="rtl">
+  <article class="news-feature-card news-feature-card--highlight">
+    <button class="news-feature-thumb" type="button" aria-label="تكبير إعلان مجلس أولياء الأمور" onclick="openAdLightbox('assets/news-parent-council.png','إعلان مجلس أولياء الأمور في الثانوية ٤٢')"><img src="assets/news-parent-council.png" alt="إعلان مجلس أولياء الأمور في الثانوية ٤٢"></button>
+    <div class="news-feature-copy"><h3>مجلس أولياء الأمور — شراكة تبني مستقبلًا</h3><p>إعلان للتعريف بالمرشحين لمجلس أولياء الأمور في الثانوية ٤٢، بهدف تعزيز الشراكة بين المدرسة والأسرة ودعم بيئة تعليمية أفضل للطالبات. اضغطي على الصورة لعرض الإعلان كاملًا.</p><span class="news-meta">إعلان تعريفي ومشاركة أسرية</span></div>
+  </article>
+
   <article class="news-feature-card">
     <button class="news-feature-thumb" type="button" aria-label="تكبير إعلان مسابقة مستقبلية أبعد من الأرض" onclick="openAdLightbox('assets/news-future.jpg','مسابقة مستقبلية أبعد من الأرض')"><img src="assets/news-future.jpg" alt="مسابقة مستقبلية أبعد من الأرض"></button>
     <div class="news-feature-copy"><h3>مسابقة «مستقبلية أبعد من الأرض»</h3><p>مسابقة إبداعية لتصميم ملصق رقمي يتخيل مهنة فضائية مستقبلية. تشارك الطالبة بعمل رقمي أصيل وفردي، مع رفع المشاركة عبر رمز الاستجابة، وتوجد جوائز للأعمال المتميزة.</p><span class="news-meta">مسابقة إبداع وابتكار</span></div>
