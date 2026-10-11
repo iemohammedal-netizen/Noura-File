@@ -979,6 +979,17 @@ footer{margin-top:30px}
 @keyframes newsTickerMove{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 @media(max-width:640px){.news-ticker-section{padding:7px 0 3px}.news-ticker-set{min-height:40px}.news-ticker-item{margin-inline:15px;font-size:.76rem;gap:7px}.news-ticker-item::after{margin-inline-start:7px;font-size:1rem}.news-ticker-track{animation-duration:22s}}
 </style>
+<script>
+// Keep the ticker synchronized with every news card published on the page.
+document.addEventListener('DOMContentLoaded', function(){
+  const titles=[...document.querySelectorAll('#latest-news-gallery .news-feature-copy h3')].map(el=>el.textContent.trim()).filter(Boolean);
+  const sets=document.querySelectorAll('.news-ticker-set');
+  if(!titles.length || sets.length<2) return;
+  const markup=titles.map(title=>`<span class="news-ticker-item">${title}</span>`).join('');
+  sets[0].innerHTML=markup;
+  sets[1].innerHTML=markup;
+});
+</script>
 <!-- Banner -->
 <section style="padding-top:10px">
   <div class="wrap">
