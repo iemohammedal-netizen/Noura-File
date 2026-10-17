@@ -1096,6 +1096,7 @@ footer{margin-top:30px}
       <a class="svc" href="https://drive.google.com/drive/folders/1GPA6z_Ieqk5xO28NlGH4jgRBxyOHQWCK" target="_blank" rel="noopener" aria-label="فتح ملف إنجاز الطالبة في Google Drive" style="text-decoration:none;">
         <span class="i" style="background:#fff4d6;color:#c99219;"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4H9l2 2h7.5A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-11Z"/><path d="M3.2 9h17.6v8.5a1.5 1.5 0 0 1-1.5 1.5h-13a1.5 1.5 0 0 1-1.5-1.5V9Z" fill="#f6c957"/><path d="M8 12h8v1.4H8zm0 3h6v1.4H8z" fill="#8c6814"/></svg></span><b>ملف إنجاز الطالبة</b>
       </a>
+      <button class="svc" data-page="certificates"><span class="i"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c99219" stroke-width="1.7" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/><path d="m17.5 16.5 1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3z"/></svg></span><b>شهادات شكر وإنجاز</b></button>
       <button class="svc" data-page="partnership"><span class="i"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2f7fd1" stroke-width="1.7" stroke-linejoin="round"><path d="M7 11 4 8l4-4 3 3h5l4 4-4 4-2-2-1 1-2-2-1 1z"/><path d="M4 16h10"/></svg></span><b>الشراكات المجتمعية</b></button>
       <button class="svc" data-page="mawhiba"><span class="i"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e8912f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.1 4.3 4.8.7-3.5 3.4.8 4.8-4.2-2.2-4.2 2.2.8-4.8-3.5-3.4 4.8-.7z"/><path d="M6 21h12M9 18h6"/></svg></span><b>موهبة</b></button>
       <button class="svc" data-page="physicalEducation"><span class="i"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2eab6e" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2.2"/><path d="m9 9 3-2 3 2M12 7v6M8 11l-3 3M16 11l3 3M10 13l-2 7M14 13l2 7"/></svg></span><b>الرياضة البدنية</b></button>
@@ -1921,6 +1922,20 @@ bulletin:{t:'النشرة المدرسية',h:`
 <li>نشرة الإنجازات الفصلية.</li>
 </ul>`+NOTE},
 
+certificates:{t:'شهادات شكر وإنجاز',h:`
+<p class="lead">مساحة مخصصة لتوثيق شهادات الشكر والتقدير والإنجازات التي تحصل عليها المدرسة وطالباتها ومنسوباتها.</p>
+<div class="mini">
+<div><b>شهادات المدرسة</b><span>شهادات الشكر والتقدير والجوائز الممنوحة للمدرسة.</span></div>
+<div><b>إنجازات الطالبات</b><span>تكريمات الطالبات وشهادات المشاركة والتميز.</span></div>
+<div><b>إنجازات المنسوبات</b><span>شهادات التقدير والإنجازات المهنية لمنسوبات المدرسة.</span></div>
+<div><b>المشاركات والمسابقات</b><span>شهادات المشاركة والفوز في البرامج والمسابقات.</span></div>
+</div>
+<h3>توثيق الشهادات والإنجازات</h3>
+<p>يمكن إضافة صور الشهادات والإنجازات هنا تباعًا، مع كتابة اسم الشهادة والجهة المانحة وتاريخ الحصول عليها.</p>
+<div class="mbox">
+<button class="boxcard" type="button"><span class="bi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg></span><span class="bt"><b>شهادات الشكر والتقدير</b><span>قسم مخصص لإضافة صور الشهادات ومعلوماتها</span></span><span class="bx">←</span></button>
+<button class="boxcard" type="button"><span class="bi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="m12 3 2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z"/><path d="M5 21h14"/></svg></span><span class="bt"><b>الإنجازات والجوائز</b><span>قسم لتوثيق الجوائز والتكريمات والنتائج المتميزة</span></span><span class="bx">←</span></button>
+</div>`},
 achievements:{t:'إنجازات نفتخر بها',h:`
 <p class="lead">مسيرة من التميز والعطاء، توثق جهود طالباتنا ومنسوبات المدرسة ومشاركتهن الفاعلة في البرامج والمبادرات والمسابقات.</p>
 <div class="mini">
