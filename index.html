@@ -1036,17 +1036,21 @@ footer{margin-top:30px}
 </div>
 <script>
 (function(){
-  const endpoint='https://counterapi.com/api/42schools.com/view/homepage';
+  const base='https://countapi.mileshilliard.com/api/v1';
+  const key='42schools_site_visits_20261020';
   const el=document.getElementById('visitorCount');
-  async function refresh(url){
+  async function refresh(mode){
     try{
-      const r=await fetch(url,{cache:'no-store'});
+      const r=await fetch(base+'/'+mode+'/'+key,{cache:'no-store'});
+      if(!r.ok) throw new Error('counter request failed');
       const d=await r.json();
       if(d && typeof d.value!=='undefined') el.textContent=Number(d.value).toLocaleString('ar-SA');
-    }catch(e){}
+    }catch(e){
+      if(el.textContent==='—') el.textContent='0';
+    }
   }
-  refresh(endpoint);
-  setInterval(function(){ refresh(endpoint+'?readOnly=true'); },15000);
+  refresh('hit');
+  setInterval(function(){ refresh('get'); },15000);
 })();
 </script>
 </section>
